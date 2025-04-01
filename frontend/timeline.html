@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Historical Timeline - Climate Trend Analysis</title>
+  <!-- Google Fonts for a modern look -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="analysis.html" class="nav-link">Analysis</a>
+    <a href="timeline.html" class="nav-link active">Timeline</a>
+    <a href="vulnerability.html" class="nav-link">Map</a>
+    <a href="news.html" class="nav-link">News & Updates</a>
+    <a href="about.html" class="nav-link">About Us</a>
+    <!-- <a href="case-studies.html" class="nav-link active">Case Studies</a> -->
+  </nav>
+
+  <!-- Cover Header -->
+  <header class="cover-header">
+    <div class="header-content">
+      <h1>Historical Timeline</h1>
+      <p>Explore how climate trends have evolved over the decades in India.</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="timeline-section">
+        <h2>Select a Decade</h2>
+        <div class="slider-container">
+          <input type="range" id="decadeSlider" min="1905" max="2020" step="10" value="1905">
+          <span id="selectedDecade">1905‑1914</span>
+        </div>
+        <button id="loadTimelineBtn" class="cta-button">Load Timeline Data</button>
+        <div id="timelineOutput" class="chart-wrapper">
+            <div class="chart-box">
+              <p id="rainValue" class="graph-value"></p>
+              <canvas id="timelineRainChart" width="400" height="300"></canvas>
+            </div>
+            <div class="chart-box">
+              <p id="tempValue" class="graph-value"></p>
+              <canvas id="timelineTempChart" width="400" height="300"></canvas>
+            </div>
+          </div>
+          
+          
+      </section>
+      
+      
+      
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Climate Trend Analysis App. All rights reserved.</p>
+  </footer>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Timeline JavaScript -->
+  <script src="timeline.js"></script>
+</body>
+</html>

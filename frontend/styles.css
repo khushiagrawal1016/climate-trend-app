@@ -1,0 +1,892 @@
+/* Existing styles... */
+.cover-header {
+    position: relative;
+    height: 165px; /* Adjust height as needed */
+    background: url('images/cover.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  
+  .cover-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Overlay for better text contrast */
+    z-index: 0;
+  }
+  
+  .header-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  
+  /* Other styles remain unchanged */
+  body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #87CEFA, #f0f8ff);
+    color: #fff;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  #controls {
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  #controls select,
+  #controls button {
+    padding: 12px 18px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 4px;
+    margin: 10px;
+  }
+  
+  #controls select {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  #controls button {
+    background-color: #1E88E5;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #controls button:hover {
+    background-color: #1565C0;
+  }
+  
+  #visualization {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+  }
+  
+  .chart-container {
+    position: relative;
+    width: 45%;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Temperature container with low-opacity background image */
+  .temp-container {
+    /* No direct background image here */
+  }
+  
+  .temp-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/temp.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.3; /* Adjust opacity as needed */
+    z-index: 0;
+  }
+  
+  /* Precipitation container with low-opacity background image */
+  .prec-container {
+    /* No direct background image here */
+  }
+  
+  .prec-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/rain.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.3; /* Adjust opacity as needed */
+    z-index: 0;
+  }
+  
+  /* Ensure canvas appears above the pseudo-element */
+  .chart-container canvas {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+  }
+  .chart-container:hover {
+    transform: translateY(-5px);
+  }
+  
+  @media (max-width: 768px) {
+    .chart-container {
+      width: 90%;
+    }
+  }
+  
+  /* Modal styles */
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+  }
+  
+  .modal-content {
+    position: relative;
+    margin: 5% auto;
+    width: 80%;
+    max-width: 900px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .modal-content canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Background for expanded temperature chart */
+  .modal-temp-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/temp.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: 0;
+  }
+  
+  /* Background for expanded precipitation chart */
+  .modal-prec-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('images/rain.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: 0;
+  }
+  
+  /* Ensure the canvas in the modal is above the pseudo-element */
+  .modal-content canvas {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .close:hover {
+    color: #000;
+  }
+  
+  /* Fixed corner images */
+/* Fixed corner images */
+.corner-img {
+    position: fixed;
+    z-index: 100;
+    height: 100px;      /* Adjust this value to match your header height */
+    width: auto;        /* Maintain aspect ratio */
+    filter: brightness(1.2); /* Increase brightness for better visibility */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* Subtle drop shadow */
+  }
+  
+/* Styles for the News Section */
+.news-section {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.news-article {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.news-article h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.news-article p {
+  margin: 5px 0;
+  color: #000;
+}
+
+.pub-date {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Styles for the Agricultural Impact & Adaptation section */
+.agricultural-impact {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.agricultural-impact h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #1E88E5;
+}
+
+.agricultural-impact p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+/* Style for the optional call-to-action button */
+.case-studies {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.case-studies .cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #1E88E5;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.case-studies .cta-button:hover {
+  background-color: #1565C0;
+}
+
+.agricultural-impact {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.agricultural-impact h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #1E88E5;
+}
+
+.agricultural-impact p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.case-studies {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.case-studies .cta-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #1E88E5;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.case-studies .cta-button:hover {
+  background-color: #1565C0;
+}
+
+.case-studies-content {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.case-studies-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #1E88E5;
+}
+
+.case-studies-content p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+.intro h2{
+  color: #1E88E5;
+}
+
+.intro p{
+  color: #333; /* Dark gray text for better readability */
+}
+
+footer p {
+  color: #333; /* Ensure the footer text is also dark for contrast */
+}
+
+/* Navigation Bar Container */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #1e88e5, #1565c0);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Link Styles */
+.nav-link {
+  color: #fff;
+  font-size: 1.2em;
+  text-decoration: none;
+  margin: 0 20px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #00000000;       /* A golden hue on hover */
+  transform: scale(1.1); /* Slight scaling effect */
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #3096d1;  /* Underline to indicate the active page */
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.about-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #1E88E5;
+}
+
+.about-content p {
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.about-content h3 {
+  margin-top: 30px;
+  font-size: 1.8em;
+  color: #1E88E5;
+  text-align: center;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.contact-list li {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+
+/* Navigation and Cover Header styles are assumed to be defined already */
+
+/* News Section Styles */
+.news-section {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.news-article {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.news-img {
+  width: 300px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.news-content {
+  padding: 20px;
+  flex: 1;
+}
+
+.news-content h2 {
+  margin-top: 0;
+  color: #1E88E5;
+  font-size: 1.8em;
+}
+
+.news-content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.pub-date {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .news-article {
+    flex-direction: column;
+  }
+  
+  .news-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+
+/* Timeline Section */
+.timeline-section {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.timeline-section h2 {
+  font-size: 2em;
+  color: #1E88E5;
+  margin-bottom: 20px;
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+#decadeSlider {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 10px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  transition: background 0.3s;
+}
+
+#decadeSlider:hover {
+  background: #ccc;
+}
+
+#decadeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1E88E5;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#decadeSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+#selectedDecade {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Button Style */
+.cta-button {
+  background-color: #1E88E5;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #1565C0;
+  transform: scale(1.05);
+}
+
+/* Chart Wrapper */
+.chart-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Container for the timeline charts */
+.chart-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+/* Ensure each canvas takes up a consistent width */
+.chart-wrapper canvas {
+  flex: 1 1 45%;         /* Grow and shrink as needed, base width ~45% */
+  max-width: 45%;
+  min-width: 300px;      /* Optional: maintain minimum width */
+}
+
+
+/* Map Section Styles */
+.map-section {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 10px;
+}
+
+/* (Optional) Adjust styling for Leaflet popups if desired */
+.leaflet-popup-content {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+}
+
+/* Navigation bar and cover header styles should remain consistent with your other pages */
+
+/* Reset some basic styles */
+body, h1, h2, p, a {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #1e88e5, #1565c0);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-link {
+  color: #fff;
+  font-size: 1.2em;
+  text-decoration: none;
+  margin: 0 20px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #ffd700;
+  transform: scale(1.05);
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #ffd700;
+}
+
+/* Cover Header */
+.cover-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1); /* 50% opacity black overlay */
+  z-index: 0;
+}
+
+.cover-header {
+  position: relative;
+  height: 165px; /* Adjust height as needed */
+  background: url('images/cover.png') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.header-content h1 {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.header-content p {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: #ffd700;
+  color: #1e88e5;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #ffc107;
+  transform: scale(1.05);
+}
+
+/* Intro Section */
+.intro {
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #1e88e5; /* Set text color to match the theme */
+}
+
+.intro h2 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.intro p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #1e88e5;
+  color: #fff;
+}
+
+/* Navigation Bar Container */
+.navbar {
+  background: linear-gradient(90deg, #1e88e5, #1565c0);  /* Gradient background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Container for Links (optional for better layout) */
+.nav-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Navigation Link Styling */
+.nav-link {
+  background: #a5d5eb;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  margin: 0 15px;
+  padding: 8px 0;              /* Only vertical padding */
+  width: 150px;                /* Fixed width for all buttons */
+  display: inline-block;       /* Allow width to be applied */
+  text-align: center;          /* Center the text horizontally */
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Hover and Active States */
+.nav-link:hover {
+  background: #e3f2fd;
+  transform: translateY(-2px);
+  color: #1E88E5; /* Set text color to blue on hover */
+}
+
+.nav-link.active {
+  background: #70c07d;             /* Highlight active link with gold color */
+  color: #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#loadTimelineBtn {
+  background: #fff;
+  color: #1e88e5;
+  font-weight: 600;
+  margin: 15px auto;
+  padding: 8px 0;
+  width: 300px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+#loadTimelineBtn:hover {
+  background: #e3f2fd;
+  transform: translateY(-2px);
+  color: #1E88E5;
+}
+
+/* Reuse existing cover-header styles */
+.about-cover {
+  background: url('images/aboutcover.png') no-repeat center center;
+  height: 35vh;               /* 35% of the viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reuse the overlay for readability */
+.about-cover .header-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 0;
+}
+
+.about-cover .header-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+}
+
+.about-cover .header-content h1 {
+  font-size: 2.8em;
+  margin-bottom: 10px;
+}
+
+.about-cover .header-content p {
+  font-size: 1.2em;
+}
+
+.chart-box {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 350px;
+}
+
+.graph-value {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #1e88e5;
+  margin-bottom: 10px;
+  text-align: center;
+}
