@@ -309,3 +309,118 @@ app.get('/api/timeline-temperature', (req, res) => {
     return res.status(500).json({ error: 'Internal server error.' });
   }
 });
+
+
+// Endpoint for Crop Recommendation based on state climate data
+app.get('/api/crop-recommendation', async (req, res) => {
+  const state = req.query.state;
+  if (!state || !stateCoordinates[state]) {
+    return res.status(400).json({ error: "Invalid or missing state parameter" });
+  }
+
+  // Path to the Excel file for the state (e.g., data/Chhattisgarh.xlsx)
+  const filePath = path.join(__dirname, '../data', `${state}.xlsx`);
+  let dataByYear = {};
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const workbook = xlsx.readFile(filePath);
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const jsonData = xlsx.utils.sheet_to_json(sheet);
+
+      // Process data for a specific period (for example, 2005-2020)
+      jsonData.forEach(row => {
+        const year = row['YEAR'];
+        if (year >= 2005 && year <= 2020) {
+          dataByYear[year] = {
+            precipitation: Number(row['ANNUAL']),
+            temperature: row['Temperature'] ? Number(row['Temperature']) : undefined
+          };
+        }
+      });
+    } catch (err) {
+      console.error(`Error reading Excel file for ${state}:`, err);
+      return res.status(500).json({ error: "Error reading state data." });
+    }
+  } else {
+    return res.status(404).json({ error: `Excel file not found for ${state}.` });
+  }
+
+  // For each year from 2005 to 2020, if temperature is missing, fetch fallback data from the internet
+  for (let year = 2005; year <= 2020; year++) {
+    if (!dataByYear[year]) {
+      try {
+        const fallback = await fetchFallbackData(state, year);
+        dataByYear[year] = fallback;
+      } catch (err) {
+        console.error(`Error fetching fallback data for ${state} in ${year}:`, err);
+      }
+    } else {
+      if (dataByYear[year].temperature === undefined) {
+        try {
+          const fallback = await fetchFallbackData(state, year);
+          dataByYear[year].temperature = fallback.temperature;
+          if (!dataByYear[year].precipitation) {
+            dataByYear[year].precipitation = fallback.precipitation;
+          }
+        } catch (err) {
+          console.error(`Error fetching fallback temperature for ${state} in ${year}:`, err);
+        }
+      }
+    }
+  }
+
+  // Calculate average values over the period (2005–2020)
+  const years = [];
+  let totalTemp = 0;
+  let totalPrec = 0;
+  let countTemp = 0;
+  let countPrec = 0;
+  for (let year = 2005; year <= 2020; year++) {
+    if (dataByYear[year]) {
+      years.push(year);
+      if (dataByYear[year].temperature !== undefined) {
+        totalTemp += dataByYear[year].temperature;
+        countTemp++;
+      }
+      if (dataByYear[year].precipitation !== undefined) {
+        totalPrec += dataByYear[year].precipitation;
+        countPrec++;
+      }
+    }
+  }
+  const avgTemp = countTemp > 0 ? totalTemp / countTemp : null;
+  const avgPrec = countPrec > 0 ? totalPrec / countPrec : null;
+
+  // Simple rule-based crop recommendation logic (adjust thresholds as needed)
+  let recommendedCrop = "Undetermined";
+  let explanation = "";
+
+  if (avgPrec >= 1200 && avgTemp !== null && avgTemp >= 25 && avgTemp <= 30) {
+    recommendedCrop = "Rice";
+    explanation = "High rainfall and moderate temperatures make this region ideal for rice cultivation.";
+  } else if (avgPrec < 800 && avgTemp !== null && avgTemp >= 25 && avgTemp <= 30) {
+    recommendedCrop = "Millets";
+    explanation = "Lower rainfall and moderate temperatures suggest that millets, which are drought-resistant, may be a better choice.";
+  } else if (avgPrec >= 800 && avgPrec < 1200 && avgTemp !== null && avgTemp > 30) {
+    recommendedCrop = "Cotton";
+    explanation = "High temperatures along with moderate rainfall indicate that cotton, a crop that thrives in hot conditions, may be suitable.";
+  } else {
+    recommendedCrop = "Diversified Cropping";
+    explanation = "A diversified cropping pattern may help mitigate risks associated with variable climate conditions.";
+  }
+
+  return res.json({
+    state: state,
+    avgTemperature: avgTemp,
+    avgPrecipitation: avgPrec,
+    recommendedCrop: recommendedCrop,
+    explanation: explanation
+  });
+});
+
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});

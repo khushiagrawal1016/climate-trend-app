@@ -722,20 +722,23 @@ body, h1, h2, p, a {
 }
 
 .cta-button {
-  display: inline-block;
-  background-color: #ffd700;
-  color: #1e88e5;
-  padding: 12px 24px;
+  background-color: #1E88E5;   /* Blue background */
+  color: #fff;                 /* White text */
+  padding: 12px 24px;          /* Consistent padding */
   font-size: 1.1em;
-  text-decoration: none;
-  border-radius: 4px;
+  border: none;
+  border-radius: 30px;         /* Fully rounded edges */
+  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  display: inline-block;
 }
 
 .cta-button:hover {
-  background-color: #ffc107;
-  transform: scale(1.05);
+  background-color: #1565C0;   /* Darker blue on hover */
+  transform: scale(1.05);      /* Slight zoom effect on hover */
 }
+
 
 /* Intro Section */
 .intro {
@@ -792,7 +795,7 @@ footer {
   font-weight: 600;
   margin: 0 15px;
   padding: 8px 0;              /* Only vertical padding */
-  width: 150px;                /* Fixed width for all buttons */
+  width: 200px;                /* Fixed width for all buttons */
   display: inline-block;       /* Allow width to be applied */
   text-align: center;          /* Center the text horizontally */
   border-radius: 30px;
@@ -889,4 +892,86 @@ footer {
   color: #1e88e5;
   margin-bottom: 10px;
   text-align: center;
+}
+
+.crop-section {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #333;
+  text-align: center;
+}
+
+.crop-section h2 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #1e88e5;
+}
+
+.crop-section select {
+  padding: 8px 12px;
+  font-size: 1.1em;
+  margin-bottom: 20px;
+}
+
+.crop-output {
+  margin-top: 20px;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+
+/* Hotspot Analysis Section */
+.hotspot-analysis {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+
+/* State cover-header styles */
+.about-cover-state1 {
+  background: url('images/maha.png') no-repeat center center;
+  height: 35vh;               /* 35% of the viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-cover-state2 {
+  background: url('images/tamil.png') no-repeat center center;
+  height: 35vh;               /* 35% of the viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-cover-state3 {
+  background: url('images/north.png') no-repeat center center;
+  height: 35vh;               /* 35% of the viewport height */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

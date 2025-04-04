@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crop Recommendation - Climate Trend Analysis</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="analysis.html" class="nav-link">Analysis</a>
+    <a href="timeline.html" class="nav-link">Timeline</a>
+    <a href="vulnerability.html" class="nav-link">Map</a>
+    <a href="crop-recommendation.html" class="nav-link active">Crop Recommender</a>
+    <a href="news.html" class="nav-link">News & Updates</a>
+    <a href="about.html" class="nav-link">About Us</a>
+    <!-- <a href="case-studies.html" class="nav-link active">Case Studies</a> -->
+  </nav>
+
+  <header class="cover-header">
+    <div class="header-overlay"></div>
+    <div class="header-content">
+      <h1>Crop Recommendation</h1>
+      <p>Discover the ideal crop for your region based on historical climate trends.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="crop-section">
+      <h2>Select a State/Union Territory</h2>
+      <select id="cropStateDropdown">
+        <option value="" disabled selected>Select State/Union Territory</option>
+        <!-- Full list of states and union territories -->
+        <option value="Andhra Pradesh">Andhra Pradesh</option>
+        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+        <option value="Assam">Assam</option>
+        <option value="Bihar">Bihar</option>
+        <option value="Chhattisgarh">Chhattisgarh</option>
+        <option value="Goa">Goa</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Haryana">Haryana</option>
+        <option value="Himachal Pradesh">Himachal Pradesh</option>
+        <option value="Jharkhand">Jharkhand</option>
+        <option value="Karnataka">Karnataka</option>
+        <option value="Kerala">Kerala</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Manipur">Manipur</option>
+        <option value="Meghalaya">Meghalaya</option>
+        <option value="Mizoram">Mizoram</option>
+        <option value="Nagaland">Nagaland</option>
+        <option value="Odisha">Odisha</option>
+        <option value="Punjab">Punjab</option>
+        <option value="Rajasthan">Rajasthan</option>
+        <option value="Sikkim">Sikkim</option>
+        <option value="Tamil Nadu">Tamil Nadu</option>
+        <option value="Telangana">Telangana</option>
+        <option value="Tripura">Tripura</option>
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Uttarakhand">Uttarakhand</option>
+        <option value="West Bengal">West Bengal</option>
+        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+        <option value="Chandigarh">Chandigarh</option>
+        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+        <option value="Lakshadweep">Lakshadweep</option>
+        <option value="Delhi">Delhi</option>
+        <option value="Puducherry">Puducherry</option>
+        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+        <option value="Ladakh">Ladakh</option>
+      </select>
+      <button id="getCropBtn" class="cta-button">Get Crop Recommendation</button>
+
+      <div id="cropOutput" class="crop-output">
+        <!-- Dynamic crop recommendation output appears here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Climate Trend Analysis App. All rights reserved.</p>
+  </footer>
+
+  <script src="crop-recommendation.js"></script>
+</body>
+</html>
